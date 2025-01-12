@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Kesehatan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .active-link {
+            color: #f97316 !important; /* Orange color with !important */
+        }
+        
+    </style>
+    
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+    <header class="bg-blue-600 text-white p-4">
+        <h1 class="text-2xl font-bold text-center">Kalkulator Kesehatan</h1>
+    </header>
+
+    <main class="flex-grow p-4 overflow-y-auto">
+        <div id="beranda" class="page active bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 p-6 rounded-lg">
+            <h2 class="text-xl font-semibold text-center text-gray-800 mb-4">
+                Selamat datang di Kalkulator Kesehatan
+            </h2>
+            <p class="text-lg text-center text-gray-600 mb-6">
+                Pilih kalkulator dari menu di bawah untuk memulai.
+            </p>
+            
+            <!-- Add image below the button -->
+            <div class="flex justify-center">
+                <img src="img/nurse.png" alt="Nurse" class="w-48 h-auto rounded-lg shadow-lg transition-transform transform hover:scale-105">
+            </div>
+        </div>
+        
+        
+
+        <div id="kalkulator" class="page">
+            <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4">Pilih Kalkulator</h2>
+                <div class="md:grid grid-cols-1 grid-cols-2 gap-4">
+                    <a href="menu/keseimbangan-cairan.html" class="block text-left px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded transition duration-200"> 
+                        <i class="fas fa-tint mr-2 text-orange-500"></i> Keseimbangan Cairan
+                    </a>
+                    <a href="menu/usia-kehamilan.html" class="block text-left px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded transition duration-200"> 
+                        <i class="fas fa-baby mr-2 text-orange-500"></i> Usia Kehamilan
+                    </a>
+                    <a href="menu/imt.html" class="block text-left px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded transition duration-200"> 
+                        <i class="fas fa-weight mr-2 text-orange-500"></i> Indeks Massa Tubuh (IMT)
+                    </a>
+                    <a href="menu/tbj.html" class="block text-left px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded transition duration-200"> 
+                        <i class="fas fa-heartbeat mr-2 text-orange-500"></i> Tingkat Bantuan Jantung (TBJ)
+                    </a>
+                    <a href="menu/obat.html" class="block text-left px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded transition duration-200"> 
+                        <i class="fas fa-pills mr-2 text-orange-500"></i> Kalkulator Obat
+                    </a>
+                    <a href="menu/tetesan-infus.html" class="block text-left px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded transition duration-200"> 
+                        <i class="fas fa-droplet mr-2 text-orange-500"></i> Tetesan Infus
+                    </a>
+                    <a href="menu/kebutuhan-oksigen.html" class="block text-left px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded transition duration-200"> 
+                        <i class="fas fa-smog mr-2 text-orange-500"></i> Kebutuhan Oksigen
+                    </a>
+                    <a href="menu/transfusi-darah.html" class="block text-left px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded transition duration-200"> 
+                        <i class="fas fa-tint mr-2 text-orange-500"></i> Kebutuhan Transfusi Darah
+                    </a>
+                    <a href="menu/gfr.html" class="block text-left px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded transition duration-200"> 
+                        <i class="fas fa-stethoscope mr-2 text-orange-500"></i> Rumus GFR
+                    </a>
+                    <a href="menu/taksiran-persalinan.html" class="block text-left px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded transition duration-200"> 
+                        <i class="fas fa-calendar-day mr-2 text-orange-500"></i> Rumus Taksiran Persalinan
+                    </a>
+                    <a href="menu/mcdonals.html" class="block text-left px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded transition duration-200"> 
+                        <i class="fas fa-calculator mr-2 text-orange-500"></i> Rumus McDonal's
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+
+        <div id="riwayat" class="page">
+            <h2 class="text-xl font-semibold mb-4">Riwayat Perhitungan</h2>
+            <ul id="riwayat-list" class="space-y-2">
+                <!-- Riwayat perhitungan akan ditambahkan di sini -->
+            </ul>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t fixed bottom-0 w-full">
+        <nav class="flex justify-around">
+            <a href="#" id="home-link" onclick="showPage('beranda')" class="flex flex-col items-center p-2 text-gray-600 hover:text-blue-600">
+                <i class="fas fa-home text-xl"></i>
+                <span class="text-xs mt-1">Beranda</span>
+            </a>
+            <a href="#" id="calculator-link" onclick="showPage('kalkulator')" class="flex flex-col items-center p-2 text-gray-600 hover:text-blue-600">
+                <i class="fas fa-calculator text-xl"></i>
+                <span class="text-xs mt-1">Kalkulator</span>
+            </a>
+        </nav>
+    </footer>
+
+    <script>
+      function showPage(pageId) {
+        // Hide all pages and then show the active one
+        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+
+        // Reset the active class for all links
+        document.querySelectorAll('footer nav a').forEach(link => {
+            link.classList.remove('active-link');
+        });
+
+        // Add the active class to the clicked link
+        if (pageId === 'beranda') {
+            document.getElementById('home-link').classList.add('active-link');
+        } else if (pageId === 'kalkulator') {
+            document.getElementById('calculator-link').classList.add('active-link');
+        } else if (pageId === 'riwayat') {
+            document.getElementById('history-link').classList.add('active-link');
+        }
+    }
+    </script>
+</body>
+</html>

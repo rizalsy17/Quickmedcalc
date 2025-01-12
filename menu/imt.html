@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Indeks Massa Tubuh (IMT)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4">
+        <div class="flex items-center justify-between">
+            <h1 class="text-xl font-bold">
+                <i class="fas fa-weight mr-2"></i>
+                Kalkulator IMT
+            </h1>
+            <a href="../index.html" class="text-white">
+                <i class="fas fa-home text-2xl text-yellow-400"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 overflow-y-auto">
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4 text-center text-blue-600">Hitung Indeks Massa Tubuh Anda</h2>
+
+            <form id="imtForm" class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-balance-scale text-green-500"></i>
+                    <div class="flex-grow">
+                        <label for="berat" class="block text-sm font-medium">Berat Badan (kg):</label>
+                        <input type="number" id="berat" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-ruler-vertical text-orange-500"></i>
+                    <div class="flex-grow">
+                        <label for="tinggi" class="block text-sm font-medium">Tinggi Badan (cm):</label>
+                        <input type="number" id="tinggi" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" onclick="hitungIMT()" 
+                            class="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200">
+                        <i class="fas fa-calculator mr-2"></i> Hitung IMT
+                    </button>
+                </div>
+            </form>
+
+            <div id="hasilIMT" class="mt-6 hidden p-6 bg-blue-100 border-l-4 border-blue-600 rounded-lg shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600">Hasil Perhitungan</h3>
+                <p id="imtValue" class="mt-2 text-xl font-semibold text-gray-800"></p>
+                <p id="imtKategori" class="mt-2 text-lg font-medium text-gray-700"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        function hitungIMT() {
+            const berat = parseFloat(document.getElementById("berat").value);
+            const tinggi = parseFloat(document.getElementById("tinggi").value) / 100; // Konversi ke meter
+
+            if (!berat || !tinggi || berat <= 0 || tinggi <= 0) {
+                alert("Masukkan nilai berat dan tinggi yang valid.");
+                return;
+            }
+
+            const imt = berat / (tinggi * tinggi); // Rumus IMT
+            let kategori = "";
+
+            if (imt < 18.5) {
+                kategori = "Kekurangan Berat Badan";
+            } else if (imt >= 18.5 && imt < 24.9) {
+                kategori = "Normal (Ideal)";
+            } else if (imt >= 25 && imt < 29.9) {
+                kategori = "Kelebihan Berat Badan";
+            } else {
+                kategori = "Obesitas";
+            }
+
+            // Tampilkan hasil
+            document.getElementById("hasilIMT").classList.remove("hidden");
+            document.getElementById("imtValue").textContent = `Hasil IMT Anda: ${imt.toFixed(2)}`;
+            document.getElementById("imtKategori").textContent = `Kategori: ${kategori}`;
+        }
+    </script>
+
+</body>
+</html>

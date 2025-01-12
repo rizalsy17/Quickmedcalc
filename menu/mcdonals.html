@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Rumus McDonald's</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-green-600 text-white p-4">
+        <div class="flex items-center justify-between">
+            <h1 class="text-xl font-bold">
+                <i class="fas fa-baby mr-2"></i>
+                Kalkulator Rumus McDonald’s
+            </h1>
+            <a href="../index.html" class="text-white">
+                <i class="fas fa-home text-2xl text-yellow-400"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 overflow-y-auto">
+        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4 text-center text-green-600">Hitung Usia Kehamilan Berdasarkan Rumus McDonald's</h2>
+
+            <form id="mcdonaldForm" class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-ruler-combined text-blue-500"></i>
+                    <div class="flex-grow">
+                        <label for="tinggiFundus" class="block text-sm font-medium">Tinggi Fundus (cm):</label>
+                        <input type="number" id="tinggiFundus" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" onclick="hitungMcDonalds()" 
+                            class="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition duration-200">
+                        <i class="fas fa-calculator mr-2"></i> Hitung Usia Kehamilan
+                    </button>
+                </div>
+            </form>
+
+            <div id="hasilMcDonalds" class="mt-6 hidden p-6 bg-green-100 border-l-4 border-green-600 rounded-lg shadow-lg">
+                <h3 class="text-lg font-semibold text-green-600">Hasil Rumus McDonald's</h3>
+                <p id="mcdonaldResult" class="mt-2 text-xl font-semibold text-gray-800"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        function hitungMcDonalds() {
+            const tinggiFundus = parseFloat(document.getElementById("tinggiFundus").value);
+            
+            if (isNaN(tinggiFundus) || tinggiFundus <= 0) {
+                alert("Masukkan tinggi fundus yang valid.");
+                return;
+            }
+
+            // Rumus McDonald’s: Usia Kehamilan (minggu) = tinggi fundus (cm) / 4
+            const usiaKehamilan = tinggiFundus / 4;
+
+            // Tampilkan hasil
+            document.getElementById("hasilMcDonalds").classList.remove("hidden");
+            document.getElementById("mcdonaldResult").textContent = `Usia Kehamilan Berdasarkan Rumus McDonald's adalah: ${usiaKehamilan.toFixed(1)} minggu.`;
+        }
+    </script>
+
+</body>
+</html>

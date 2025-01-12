@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Kebutuhan Transfusi Darah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-red-600 text-white p-4">
+        <div class="flex items-center justify-between">
+            <h1 class="text-xl font-bold">
+                <i class="fas fa-tint mr-2"></i>
+                Kalkulator Kebutuhan Transfusi Darah
+            </h1>
+            <a href="../index.html" class="text-white">
+                <i class="fas fa-home text-2xl text-yellow-400"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 overflow-y-auto">
+        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4 text-center text-red-600">Hitung Kebutuhan Transfusi Darah</h2>
+
+            <form id="transfusiDarahForm" class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-male text-orange-500"></i>
+                    <div class="flex-grow">
+                        <label for="beratBadan" class="block text-sm font-medium">Berat Badan (kg):</label>
+                        <input type="number" id="beratBadan" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-heartbeat text-yellow-500"></i>
+                    <div class="flex-grow">
+                        <label for="kehilangan" class="block text-sm font-medium">Persentase Kehilangan Darah (%):</label>
+                        <input type="number" id="kehilangan" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" onclick="hitungKebutuhanTransfusi()" 
+                            class="w-full py-2 bg-red-600 text-white rounded hover:bg-red-700 transition duration-200">
+                        <i class="fas fa-calculator mr-2"></i> Hitung Kebutuhan Transfusi Darah
+                    </button>
+                </div>
+            </form>
+
+            <div id="hasilTransfusi" class="mt-6 hidden p-6 bg-red-100 border-l-4 border-red-600 rounded-lg shadow-lg">
+                <h3 class="text-lg font-semibold text-red-600">Hasil Perhitungan</h3>
+                <p id="kebutuhanTransfusi" class="mt-2 text-xl font-semibold text-gray-800"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        function hitungKebutuhanTransfusi() {
+            const beratBadan = parseFloat(document.getElementById("beratBadan").value);
+            const kehilangan = parseFloat(document.getElementById("kehilangan").value);
+
+            if (!beratBadan || !kehilangan) {
+                alert("Masukkan semua data yang diperlukan.");
+                return;
+            }
+
+            // Menghitung kebutuhan transfusi darah
+            const darahHilang = beratBadan * (kehilangan / 100);
+            const kebutuhanTransfusi = darahHilang * 0.1; // 1 unit darah setara dengan 10% kehilangan darah
+
+            // Tampilkan hasil
+            document.getElementById("hasilTransfusi").classList.remove("hidden");
+            document.getElementById("kebutuhanTransfusi").textContent = `Kebutuhan transfusi darah: ${kebutuhanTransfusi.toFixed(2)} unit.`;
+        }
+    </script>
+
+</body>
+</html>

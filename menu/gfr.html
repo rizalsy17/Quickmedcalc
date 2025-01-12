@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Rumus GFR (Glomerular Filtration Rate)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4">
+        <div class="flex items-center justify-between">
+            <h1 class="text-xl font-bold">
+                <i class="fas fa-cogs mr-2"></i>
+                Kalkulator GFR (Glomerular Filtration Rate)
+            </h1>
+            <a href="../index.html" class="text-white">
+                <i class="fas fa-home text-2xl text-yellow-400"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 overflow-y-auto">
+        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4 text-center text-blue-600">Hitung GFR (Glomerular Filtration Rate)</h2>
+
+            <form id="gfrForm" class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-user text-orange-500"></i>
+                    <div class="flex-grow">
+                        <label for="umur" class="block text-sm font-medium">Umur (tahun):</label>
+                        <input type="number" id="umur" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-weight text-yellow-500"></i>
+                    <div class="flex-grow">
+                        <label for="beratBadan" class="block text-sm font-medium">Berat Badan (kg):</label>
+                        <input type="number" id="beratBadan" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-genderless text-green-500"></i>
+                    <div class="flex-grow">
+                        <label for="jenisKelamin" class="block text-sm font-medium">Jenis Kelamin:</label>
+                        <select id="jenisKelamin" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                            <option value="pria">Pria</option>
+                            <option value="wanita">Wanita</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-vials text-red-500"></i>
+                    <div class="flex-grow">
+                        <label for="kreatinin" class="block text-sm font-medium">Kadar Kreatinin Serum (mg/dL):</label>
+                        <input type="number" id="kreatinin" class="mt-1 p-2 border border-gray-300 rounded w-full" step="0.01" required>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" onclick="hitungGFR()" 
+                            class="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200">
+                        <i class="fas fa-calculator mr-2"></i> Hitung GFR
+                    </button>
+                </div>
+            </form>
+
+            <div id="hasilGFR" class="mt-6 hidden p-6 bg-blue-100 border-l-4 border-blue-600 rounded-lg shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600">Hasil Perhitungan GFR</h3>
+                <p id="gfrResult" class="mt-2 text-xl font-semibold text-gray-800"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        function hitungGFR() {
+            const umur = parseInt(document.getElementById("umur").value);
+            const beratBadan = parseFloat(document.getElementById("beratBadan").value);
+            const jenisKelamin = document.getElementById("jenisKelamin").value;
+            const kreatinin = parseFloat(document.getElementById("kreatinin").value);
+
+            if (isNaN(umur) || isNaN(beratBadan) || isNaN(kreatinin)) {
+                alert("Masukkan semua data yang diperlukan.");
+                return;
+            }
+
+            // Rumus GFR berdasarkan formula Cockcroft-Gault
+            let gfr;
+
+            if (jenisKelamin === 'pria') {
+                gfr = ((140 - umur) * beratBadan) / (72 * kreatinin);
+            } else {
+                gfr = ((140 - umur) * beratBadan) / (72 * kreatinin) * 0.85;
+            }
+
+            // Tampilkan hasil
+            document.getElementById("hasilGFR").classList.remove("hidden");
+            document.getElementById("gfrResult").textContent = `GFR Anda adalah: ${gfr.toFixed(2)} mL/menit/1.73m²`;
+        }
+    </script>
+
+</body>
+</html>

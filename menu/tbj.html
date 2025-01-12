@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Tingkat Bantuan Jantung (TBJ)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-red-600 text-white p-4">
+        <div class="flex items-center justify-between">
+            <h1 class="text-xl font-bold">
+                <i class="fas fa-heartbeat mr-2"></i>
+                Kalkulator TBJ
+            </h1>
+            <a href="../index.html" class="text-white">
+                <i class="fas fa-home text-2xl text-yellow-400"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 overflow-y-auto">
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4 text-center text-red-600">Hitung Tingkat Bantuan Jantung Anda</h2>
+
+            <form id="tbjForm" class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-heart text-pink-500"></i>
+                    <div class="flex-grow">
+                        <label for="denyut" class="block text-sm font-medium">Denyut Jantung (bpm):</label>
+                        <input type="number" id="denyut" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-stopwatch text-blue-500"></i>
+                    <div class="flex-grow">
+                        <label for="usia" class="block text-sm font-medium">Usia (tahun):</label>
+                        <input type="number" id="usia" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" onclick="hitungTBJ()" 
+                            class="w-full py-2 bg-red-600 text-white rounded hover:bg-red-700 transition duration-200">
+                        <i class="fas fa-calculator mr-2"></i> Hitung TBJ
+                    </button>
+                </div>
+            </form>
+
+            <div id="hasilTBJ" class="mt-6 hidden p-6 bg-red-100 border-l-4 border-red-600 rounded-lg shadow-lg">
+                <h3 class="text-lg font-semibold text-red-600">Hasil Perhitungan</h3>
+                <p id="tbjValue" class="mt-2 text-xl font-semibold text-gray-800"></p>
+                <p id="tbjKategori" class="mt-2 text-lg font-medium text-gray-700"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        function hitungTBJ() {
+            const denyut = parseFloat(document.getElementById("denyut").value);
+            const usia = parseInt(document.getElementById("usia").value);
+
+            if (!denyut || !usia || denyut <= 0 || usia <= 0) {
+                alert("Masukkan nilai denyut jantung dan usia yang valid.");
+                return;
+            }
+
+            const tbjMaksimal = 220 - usia; // Rumus denyut jantung maksimal
+            const tbj = (denyut / tbjMaksimal) * 100; // Rumus TBJ (%)
+            let kategori = "";
+
+            if (tbj < 50) {
+                kategori = "Sangat Rendah (Tidak Optimal)";
+            } else if (tbj >= 50 && tbj <= 70) {
+                kategori = "Zona Kebugaran (Optimal)";
+            } else if (tbj > 70 && tbj <= 85) {
+                kategori = "Zona Aerobik (Sangat Baik)";
+            } else {
+                kategori = "Zona Berbahaya (Terlalu Tinggi)";
+            }
+
+            // Tampilkan hasil
+            document.getElementById("hasilTBJ").classList.remove("hidden");
+            document.getElementById("tbjValue").textContent = `Tingkat Bantuan Jantung Anda: ${tbj.toFixed(2)}% dari denyut jantung maksimal.`;
+            document.getElementById("tbjKategori").textContent = `Kategori: ${kategori}`;
+        }
+    </script>
+
+</body>
+</html>

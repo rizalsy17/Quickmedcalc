@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Usia Kehamilan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+
+    <header class="bg-green-600 text-white p-4">
+        <div class="flex items-center justify-between">
+            <h1 class="text-xl font-bold text-center">
+                <i class="fas fa-baby-carriage mr-2"></i>
+                Kalkulator Usia Kehamilan
+            </h1>
+            <a href="../index.html" class="text-white">
+                <i class="fas fa-home text-2xl text-orange-400"></i>
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow p-4 overflow-y-auto">
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4 text-center text-green-600">Perhitungan Usia Kehamilan</h2>
+
+            <form id="usia-kehamilan-form" class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-calendar-alt text-yellow-500"></i>
+                    <div class="flex-grow">
+                        <label for="hpht" class="block text-sm font-medium">Tanggal HPHT</label>
+                        <input type="date" id="hpht" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-calendar-check text-orange-500"></i>
+                    <div class="flex-grow">
+                        <label for="hari-ini" class="block text-sm font-medium">Tanggal Hari Ini</label>
+                        <input type="date" id="hari-ini" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition duration-200">
+                        <i class="fas fa-calculator mr-2"></i> Hitung Usia Kehamilan
+                    </button>
+                </div>
+            </form>
+
+            <div id="hasil-kehamilan" class="mt-6 hidden p-6 bg-green-100 border-l-4 border-green-600 rounded-lg shadow-lg">
+                <h3 class="text-lg font-semibold text-green-600">Hasil Perhitungan</h3>
+                <p id="usia-kehamilan" class="mt-2 text-xl font-semibold text-gray-800"></p>
+                <div class="mt-4">
+                    <p class="text-sm text-gray-700"><strong>HPHT:</strong> <span id="result-hpht"></span></p>
+                    <p class="text-sm text-gray-700"><strong>Tanggal Hari Ini:</strong> <span id="result-hari-ini"></span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById("usia-kehamilan-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const hpht = new Date(document.getElementById("hpht").value);
+            const hariIni = new Date(document.getElementById("hari-ini").value);
+
+            if (isNaN(hpht.getTime()) || isNaN(hariIni.getTime())) {
+                alert("Silakan masukkan tanggal yang valid.");
+                return;
+            }
+
+            const selisihHari = Math.ceil((hariIni - hpht) / (1000 * 60 * 60 * 24));
+            const usiaMinggu = Math.floor(selisihHari / 7);
+            const sisaHari = selisihHari % 7;
+
+            if (selisihHari < 0) {
+                alert("Tanggal HPHT tidak boleh lebih dari tanggal hari ini.");
+                return;
+            }
+
+            // Tampilkan hasil
+            document.getElementById("hasil-kehamilan").classList.remove("hidden");
+            document.getElementById("usia-kehamilan").textContent = `Usia kehamilan saat ini: ${usiaMinggu} minggu dan ${sisaHari} hari.`;
+
+            // Tampilkan nilai input
+            document.getElementById("result-hpht").textContent = hpht.toLocaleDateString("id-ID");
+            document.getElementById("result-hari-ini").textContent = hariIni.toLocaleDateString("id-ID");
+        });
+    </script>
+
+</body>
+</html>

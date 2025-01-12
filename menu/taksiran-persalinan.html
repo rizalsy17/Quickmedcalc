@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Taksiran Persalinan (TP)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-green-600 text-white p-4">
+        <div class="flex items-center justify-between">
+            <h1 class="text-xl font-bold">
+                <i class="fas fa-calendar-check mr-2"></i>
+                Kalkulator Taksiran Persalinan (TP)
+            </h1>
+            <a href="../index.html" class="text-white">
+                <i class="fas fa-home text-2xl text-yellow-400"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 overflow-y-auto">
+        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4 text-center text-green-600">Hitung Taksiran Persalinan (TP)</h2>
+
+            <form id="tpForm" class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-calendar-day text-blue-500"></i>
+                    <div class="flex-grow">
+                        <label for="tanggalHaidTerakhir" class="block text-sm font-medium">Tanggal Haid Terakhir:</label>
+                        <input type="date" id="tanggalHaidTerakhir" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" onclick="hitungTP()" 
+                            class="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition duration-200">
+                        <i class="fas fa-calculator mr-2"></i> Hitung TP
+                    </button>
+                </div>
+            </form>
+
+            <div id="hasilTP" class="mt-6 hidden p-6 bg-green-100 border-l-4 border-green-600 rounded-lg shadow-lg">
+                <h3 class="text-lg font-semibold text-green-600">Hasil Taksiran Persalinan</h3>
+                <p id="tpResult" class="mt-2 text-xl font-semibold text-gray-800"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        function hitungTP() {
+            const tanggalHaidTerakhir = document.getElementById("tanggalHaidTerakhir").value;
+            
+            if (!tanggalHaidTerakhir) {
+                alert("Masukkan tanggal haid terakhir.");
+                return;
+            }
+
+            const haidDate = new Date(tanggalHaidTerakhir);
+            haidDate.setMonth(haidDate.getMonth() + 9); // Tambahkan 9 bulan
+
+            // Formatkan hasil dalam format Tanggal
+            const tpDate = haidDate.toLocaleDateString("id-ID");
+
+            // Tampilkan hasil
+            document.getElementById("hasilTP").classList.remove("hidden");
+            document.getElementById("tpResult").textContent = `Taksiran Persalinan Anda adalah: ${tpDate}`;
+        }
+    </script>
+
+</body>
+</html>
