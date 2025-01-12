@@ -16,16 +16,21 @@
         .active-link {
             color: #f97316 !important; /* Orange color with !important */
         }
+
+        /* Ensure the content area can scroll if there is more content than the available space */
+        .scrollable-content {
+            max-height: calc(100vh - 80px); /* Subtract the height of the footer */
+            overflow-y: auto;
+        }
         
     </style>
-    
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100">
     <header class="bg-blue-600 text-white p-4">
-        <h1 class="text-2xl font-bold text-center">Kalkulator Kesehatan</h1>
+        <h1 class="text-xl font-bold text-center">Kalkulator Kesehatan</h1>
     </header>
 
-    <main class="flex-grow p-4 overflow-y-auto">
+    <main class="flex-grow p-8">
         <div id="beranda" class="page active bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 p-6 rounded-lg">
             <h2 class="text-xl font-semibold text-center text-gray-800 mb-4">
                 Selamat datang di Kalkulator Kesehatan
@@ -39,10 +44,8 @@
                 <img src="img/nurse.png" alt="Nurse" class="w-48 h-auto rounded-lg shadow-lg transition-transform transform hover:scale-105">
             </div>
         </div>
-        
-        
 
-        <div id="kalkulator" class="page">
+        <div id="kalkulator" class="page scrollable-content">
             <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
                 <h2 class="text-xl font-semibold mb-4">Pilih Kalkulator</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -82,7 +85,6 @@
                 </div>
             </div>
         </div>
-        
 
         <div id="riwayat" class="page">
             <h2 class="text-xl font-semibold mb-4">Riwayat Perhitungan</h2>
@@ -92,7 +94,7 @@
         </div>
     </main>
 
-    <footer class="bg-white border-t fixed bottom-0 w-full">
+    <footer class="bg-white border-t fixed bottom-0 w-full h-16">
         <nav class="flex justify-around">
             <a href="#" id="home-link" onclick="showPage('beranda')" class="flex flex-col items-center p-2 text-gray-600 hover:text-blue-600">
                 <i class="fas fa-home text-xl"></i>
