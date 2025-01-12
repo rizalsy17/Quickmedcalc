@@ -12,7 +12,7 @@
     <!-- Header -->
     <header class="bg-blue-600 text-white p-4">
         <div class="flex items-center justify-between">
-            <h1 class="text-xl font-bold">
+            <h1 class="text-l font-bold">
                 <i class="fas fa-lungs mr-2"></i>
                 Kalkulator Kebutuhan Oksigen
             </h1>
@@ -36,20 +36,10 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <i class="fas fa-calendar-alt text-yellow-500"></i>
-                    <div class="flex-grow">
-                        <label for="usia" class="block text-sm font-medium">Usia (tahun):</label>
-                        <input type="number" id="usia" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-2">
                     <i class="fas fa-heartbeat text-red-500"></i>
                     <div class="flex-grow">
-                        <label for="kondisi" class="block text-sm font-medium">Kondisi (Normal/Respiratory):</label>
-                        <select id="kondisi" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
-                            <option value="normal">Normal</option>
-                            <option value="respiratory">Respiratory</option>
-                        </select>
+                        <label for="frekuensiNapas" class="block text-sm font-medium">Frekuensi Napas (RR):</label>
+                        <input type="number" id="frekuensiNapas" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
                     </div>
                 </div>
                 <div>
@@ -71,32 +61,20 @@
     <script>
         function hitungKebutuhanOksigen() {
             const beratBadan = parseFloat(document.getElementById("beratBadan").value);
-            const usia = parseFloat(document.getElementById("usia").value);
-            const kondisi = document.getElementById("kondisi").value;
+            const frekuensiNapas = parseFloat(document.getElementById("frekuensiNapas").value);
 
-            if (!beratBadan || !usia || !kondisi) {
-                alert("Masukkan semua data yang diperlukan.");
+            if (!beratBadan || !frekuensiNapas || beratBadan <= 0 || frekuensiNapas <= 0) {
+                alert("Masukkan nilai berat badan dan frekuensi napas yang valid.");
                 return;
             }
 
-            let kebutuhanOksigen = 0;
-
-            // Rumus kebutuhan oksigen berdasarkan berat badan, usia dan kondisi
-            if (kondisi === "normal") {
-                if (usia < 18) {
-                    kebutuhanOksigen = beratBadan * 0.05; // Anak-anak
-                } else if (usia >= 18 && usia <= 60) {
-                    kebutuhanOksigen = beratBadan * 0.03; // Dewasa
-                } else {
-                    kebutuhanOksigen = beratBadan * 0.04; // Lansia
-                }
-            } else if (kondisi === "respiratory") {
-                kebutuhanOksigen = beratBadan * 0.08; // Kondisi Respirasi
-            }
+            // Rumus Kebutuhan Oksigen
+            const tidalVolume = beratBadan * 7; // Menggunakan rata-rata 7 cc per kg
+            const minuteVolume = tidalVolume * frekuensiNapas;
 
             // Tampilkan hasil
             document.getElementById("hasilOksigen").classList.remove("hidden");
-            document.getElementById("kebutuhanOksigen").textContent = `Kebutuhan Oksigen: ${kebutuhanOksigen.toFixed(2)} L/menit.`;
+            document.getElementById("kebutuhanOksigen").textContent = `Kebutuhan Oksigen: ${minuteVolume.toFixed(2)} mL/menit.`;
         }
     </script>
 

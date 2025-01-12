@@ -12,7 +12,7 @@
     <!-- Header -->
     <header class="bg-green-600 text-white p-4">
         <div class="flex items-center justify-between">
-            <h1 class="text-xl font-bold">
+            <h1 class="text-l font-bold">
                 <i class="fas fa-calendar-check mr-2"></i>
                 Kalkulator Taksiran Persalinan (TP)
             </h1>
@@ -54,17 +54,29 @@
     <script>
         function hitungTP() {
             const tanggalHaidTerakhir = document.getElementById("tanggalHaidTerakhir").value;
-            
+
             if (!tanggalHaidTerakhir) {
                 alert("Masukkan tanggal haid terakhir.");
                 return;
             }
 
             const haidDate = new Date(tanggalHaidTerakhir);
-            haidDate.setMonth(haidDate.getMonth() + 9); // Tambahkan 9 bulan
+            let day = haidDate.getDate() + 7;
+            let month = haidDate.getMonth(); // Bulan dalam JavaScript dimulai dari 0
+            let year = haidDate.getFullYear();
+
+            if (month >= 3) { // HPHT April-Desember
+                month -= 3;
+                year += 1;
+            } else { // HPHT Januari-Maret
+                month += 9;
+            }
+
+            // Sesuaikan hari dan bulan jika melebihi batas
+            const hplDate = new Date(year, month, day);
 
             // Formatkan hasil dalam format Tanggal
-            const tpDate = haidDate.toLocaleDateString("id-ID");
+            const tpDate = hplDate.toLocaleDateString("id-ID");
 
             // Tampilkan hasil
             document.getElementById("hasilTP").classList.remove("hidden");

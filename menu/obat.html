@@ -12,7 +12,7 @@
     <!-- Header -->
     <header class="bg-blue-600 text-white p-4">
         <div class="flex items-center justify-between">
-            <h1 class="text-xl font-bold">
+            <h1 class="text-l font-bold">
                 <i class="fas fa-pills mr-2"></i>
                 Kalkulator Dosis Obat
             </h1>
@@ -29,24 +29,24 @@
 
             <form id="obatForm" class="space-y-4">
                 <div class="flex items-center space-x-2">
-                    <i class="fas fa-weight text-green-500"></i>
-                    <div class="flex-grow">
-                        <label for="berat" class="block text-sm font-medium">Berat Badan (kg):</label>
-                        <input type="number" id="berat" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-2">
                     <i class="fas fa-vial text-purple-500"></i>
                     <div class="flex-grow">
-                        <label for="dosis" class="block text-sm font-medium">Dosis Obat (mg/kg):</label>
-                        <input type="number" id="dosis" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                        <label for="permintaan" class="block text-sm font-medium">Permintaan Obat (mg):</label>
+                        <input type="number" id="permintaan" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-capsules text-yellow-500"></i>
                     <div class="flex-grow">
-                        <label for="kekuatan" class="block text-sm font-medium">Kekuatan Obat (mg/tablet):</label>
-                        <input type="number" id="kekuatan" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                        <label for="sediaan" class="block text-sm font-medium">Sediaan Obat (mg):</label>
+                        <input type="number" id="sediaan" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-flask text-green-500"></i>
+                    <div class="flex-grow">
+                        <label for="pelarut" class="block text-sm font-medium">Pelarut (cc):</label>
+                        <input type="number" id="pelarut" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
                     </div>
                 </div>
                 <div>
@@ -59,8 +59,7 @@
 
             <div id="hasilObat" class="mt-6 hidden p-6 bg-blue-100 border-l-4 border-blue-600 rounded-lg shadow-lg">
                 <h3 class="text-lg font-semibold text-blue-600">Hasil Perhitungan</h3>
-                <p id="totalDosis" class="mt-2 text-xl font-semibold text-gray-800"></p>
-                <p id="jumlahTablet" class="mt-2 text-lg font-medium text-gray-700"></p>
+                <p id="dosisObat" class="mt-2 text-xl font-semibold text-gray-800"></p>
             </div>
         </div>
     </main>
@@ -68,22 +67,20 @@
     <!-- JavaScript -->
     <script>
         function hitungDosisObat() {
-            const berat = parseFloat(document.getElementById("berat").value);
-            const dosis = parseFloat(document.getElementById("dosis").value);
-            const kekuatan = parseFloat(document.getElementById("kekuatan").value);
+            const permintaan = parseFloat(document.getElementById("permintaan").value);
+            const sediaan = parseFloat(document.getElementById("sediaan").value);
+            const pelarut = parseFloat(document.getElementById("pelarut").value);
 
-            if (!berat || !dosis || !kekuatan || berat <= 0 || dosis <= 0 || kekuatan <= 0) {
-                alert("Masukkan nilai berat badan, dosis, dan kekuatan obat yang valid.");
+            if (!permintaan || !sediaan || !pelarut || permintaan <= 0 || sediaan <= 0 || pelarut <= 0) {
+                alert("Masukkan nilai permintaan, sediaan, dan pelarut yang valid.");
                 return;
             }
 
-            const totalDosis = berat * dosis; // Menghitung total dosis (mg)
-            const jumlahTablet = Math.ceil(totalDosis / kekuatan); // Menghitung jumlah tablet (dibulatkan ke atas)
+            const dosisObat = (permintaan / sediaan) * pelarut; // Rumus dosis obat
 
             // Tampilkan hasil
             document.getElementById("hasilObat").classList.remove("hidden");
-            document.getElementById("totalDosis").textContent = `Total Dosis: ${totalDosis.toFixed(2)} mg.`;
-            document.getElementById("jumlahTablet").textContent = `Jumlah Tablet: ${jumlahTablet} tablet.`;
+            document.getElementById("dosisObat").textContent = `Dosis Obat yang Diberikan: ${dosisObat.toFixed(2)} cc.`;
         }
     </script>
 

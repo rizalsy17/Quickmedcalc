@@ -11,9 +11,9 @@
 
     <header class="bg-blue-600 text-white p-4">
         <div class="flex items-center justify-between">
-            <h1 class="text-xl font-bold text-center">
+            <h1 class="text-l font-bold text-center">
                 <i class="fas fa-tint mr-2 text-white"></i> <!-- Water droplet icon -->
-                Kalkulator Keseimbangan Cairan
+                Kebutuhan Cairan Dewasa 
             </h1>
             
             
@@ -25,11 +25,11 @@
 
     <main class="flex-grow p-4 overflow-y-auto">
         <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold mb-4 text-center text-orange-600">Perhitungan Keseimbangan Cairan</h2>
+            <h2 class="text-xl font-semibold mb-4 text-center text-orange-600">Hitung Kebutuhan Cairan</h2>
 
             <form id="keseimbangan-form" class="space-y-4">
                 <div class="flex items-center space-x-2">
-                    <i class="fas fa-weight text-yellow-500"></i> <!-- Ikon kuning -->
+                    <i class="fas fa-weight text-yellow-500"></i>
                     <div class="flex-grow">
                         <label for="berat-badan" class="block text-sm font-medium">Berat Badan (kg)</label>
                         <input type="number" id="berat-badan" class="mt-1 p-2 border border-gray-300 rounded w-full" placeholder="Masukkan berat badan" required>
@@ -37,58 +37,28 @@
                 </div>
             
                 <div class="flex items-center space-x-2">
-                    <i class="fas fa-birthday-cake text-orange-500"></i> <!-- Ikon oranye -->
+                    <i class="fas fa-temperature-high text-orange-500"></i>
                     <div class="flex-grow">
-                        <label for="usia" class="block text-sm font-medium">Usia (tahun)</label>
-                        <input type="number" id="usia" class="mt-1 p-2 border border-gray-300 rounded w-full" placeholder="Masukkan usia" required>
-                    </div>
-                </div>
-            
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-genderless text-yellow-500"></i> <!-- Ikon kuning -->
-                    <div class="flex-grow">
-                        <label for="jenis-kelamin" class="block text-sm font-medium">Jenis Kelamin</label>
-                        <select id="jenis-kelamin" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
-                            <option value="" disabled selected>Pilih jenis kelamin</option>
-                            <option value="pria">Pria</option>
-                            <option value="wanita">Wanita</option>
-                        </select>
-                    </div>
-                </div>
-            
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-notes-medical text-orange-500"></i> <!-- Ikon oranye -->
-                    <div class="flex-grow">
-                        <label for="kondisi-medis" class="block text-sm font-medium">Kondisi Medis</label>
-                        <select id="kondisi-medis" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
-                            <option value="" disabled selected>Pilih kondisi medis</option>
-                            <option value="normal">Normal</option>
-                            <option value="dehidrasi">Dehidrasi</option>
-                            <option value="kelebihan-cairan">Kelebihan Cairan</option>
-                        </select>
+                        <label for="suhu" class="block text-sm font-medium">Suhu Tubuh (℃)</label>
+                        <input type="number" id="suhu" class="mt-1 p-2 border border-gray-300 rounded w-full" placeholder="Masukkan suhu tubuh" required>
                     </div>
                 </div>
             
                 <div>
                     <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200">
-                        <i class="fas fa-calculator mr-2 text-center"></i>
+                        <i class="fas fa-calculator mr-2"></i> Hitung
                     </button>
                 </div>
             </form>
             
-
             <div id="hasil-cairan" class="mt-6 hidden p-6 bg-blue-100 border-l-4 border-blue-600 rounded-lg shadow-lg">
                 <h3 class="text-lg font-semibold text-blue-600">Hasil Perhitungan</h3>
                 <p id="kebutuhan-cairan" class="mt-2 text-xl font-semibold text-gray-800"></p>
                 <div class="mt-4">
                     <p class="text-sm text-gray-700"><strong>Berat Badan:</strong> <span id="result-berat-badan"></span> kg</p>
-                    <p class="text-sm text-gray-700"><strong>Usia:</strong> <span id="result-usia"></span> tahun</p>
-                    <p class="text-sm text-gray-700"><strong>Jenis Kelamin:</strong> <span id="result-jenis-kelamin"></span></p>
-                    <p class="text-sm text-gray-700"><strong>Kondisi Medis:</strong> <span id="result-kondisi-medis"></span></p>
+                    <p class="text-sm text-gray-700"><strong>Suhu Tubuh:</strong> <span id="result-suhu"></span> ℃</p>
                 </div>
             </div>
-            
-            
         </div>
     </main>
 
@@ -109,52 +79,33 @@
         </nav>
     </footer> -->
 
+    
     <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-        }
-
         document.getElementById("keseimbangan-form").addEventListener("submit", function(event) {
-    event.preventDefault();
-    
-    const beratBadan = parseFloat(document.getElementById("berat-badan").value);
-    const usia = parseInt(document.getElementById("usia").value);
-    const jenisKelamin = document.getElementById("jenis-kelamin").value;
-    const kondisiMedis = document.getElementById("kondisi-medis").value;
+            event.preventDefault();
+            
+            const beratBadan = parseFloat(document.getElementById("berat-badan").value);
+            const suhuTubuh = parseFloat(document.getElementById("suhu").value);
 
-    if (isNaN(beratBadan) || isNaN(usia)) {
-        alert("Silakan masukkan nilai yang valid.");
-        return;
-    }
+            if (isNaN(beratBadan) || isNaN(suhuTubuh)) {
+                alert("Silakan masukkan nilai yang valid.");
+                return;
+            }
 
-    let kebutuhanCairan = 0;
+            // Perhitungan kebutuhan cairan dasar
+            let kebutuhanCairan = 30 * beratBadan; // Kebutuhan cairan dalam cc/24 jam
 
-    // Formula sederhana untuk menghitung kebutuhan cairan berdasarkan jenis kelamin dan usia
-    if (jenisKelamin === "pria") {
-        kebutuhanCairan = beratBadan * 40;
-    } else {
-        kebutuhanCairan = beratBadan * 35;
-    }
+            // Penyesuaian kebutuhan cairan jika suhu tubuh meningkat
+            if (suhuTubuh > 37.5) {
+                const tambahan = kebutuhanCairan * (0.12 + (Math.min(suhuTubuh - 37.5, 1) * 0.03));
+                kebutuhanCairan += tambahan;
+            }
 
-    // Penyesuaian berdasarkan kondisi medis
-    if (kondisiMedis === "dehidrasi") {
-        kebutuhanCairan += 1000; // Tambahan untuk dehidrasi
-    } else if (kondisiMedis === "kelebihan-cairan") {
-        kebutuhanCairan -= 1000; // Kurangi untuk kelebihan cairan
-    }
-
-    // Display results
-    document.getElementById("hasil-cairan").classList.remove("hidden");
-    document.getElementById("kebutuhan-cairan").textContent = `Kebutuhan cairan harian: ${kebutuhanCairan} ml`;
-    
-    // Show the entered values
-    document.getElementById("result-berat-badan").textContent = beratBadan;
-    document.getElementById("result-usia").textContent = usia;
-    document.getElementById("result-jenis-kelamin").textContent = jenisKelamin === "pria" ? "Pria" : "Wanita";
-    document.getElementById("result-kondisi-medis").textContent = kondisiMedis === "normal" ? "Normal" :
-                                                                 kondisiMedis === "dehidrasi" ? "Dehidrasi" : "Kelebihan Cairan";
-
+            // Tampilkan hasil
+            document.getElementById("hasil-cairan").classList.remove("hidden");
+            document.getElementById("kebutuhan-cairan").textContent = `Kebutuhan cairan harian: ${kebutuhanCairan.toFixed(2)} cc/24 jam`;
+            document.getElementById("result-berat-badan").textContent = beratBadan;
+            document.getElementById("result-suhu").textContent = suhuTubuh;
         });
     </script>
 </body>

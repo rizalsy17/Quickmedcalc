@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Tingkat Bantuan Jantung (TBJ)</title>
+    <title>Kalkulator Taksiran Berat Janin (TBJ)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
@@ -12,9 +12,9 @@
     <!-- Header -->
     <header class="bg-red-600 text-white p-4">
         <div class="flex items-center justify-between">
-            <h1 class="text-xl font-bold">
+            <h1 class="text-l font-bold">
                 <i class="fas fa-heartbeat mr-2"></i>
-                Kalkulator TBJ
+                Taksiran Berat Janin (TBJ) 
             </h1>
             <a href="../index.html" class="text-white">
                 <i class="fas fa-home text-2xl text-yellow-400"></i>
@@ -25,21 +25,25 @@
     <!-- Main Content -->
     <main class="flex-grow p-4 overflow-y-auto">
         <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold mb-4 text-center text-red-600">Hitung Tingkat Bantuan Jantung Anda</h2>
+            <h2 class="text-xl font-semibold mb-4 text-center text-red-600">Hitung Taksiran Berat Janin (TBJ)</h2>
 
             <form id="tbjForm" class="space-y-4">
                 <div class="flex items-center space-x-2">
-                    <i class="fas fa-heart text-pink-500"></i>
+                    <i class="fas fa-ruler text-pink-500"></i>
                     <div class="flex-grow">
-                        <label for="denyut" class="block text-sm font-medium">Denyut Jantung (bpm):</label>
-                        <input type="number" id="denyut" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                        <label for="tfu" class="block text-sm font-medium">Tinggi Fundus Uteri (TFU) (cm):</label>
+                        <input type="number" id="tfu" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <i class="fas fa-stopwatch text-blue-500"></i>
+                    <i class="fas fa-child text-blue-500"></i>
                     <div class="flex-grow">
-                        <label for="usia" class="block text-sm font-medium">Usia (tahun):</label>
-                        <input type="number" id="usia" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                        <label for="kepala" class="block text-sm font-medium">Kepala Masuk PAP?</label>
+                        <select id="kepala" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                            <option value="">Pilih...</option>
+                            <option value="masuk">Ya</option>
+                            <option value="tidak">Tidak</option>
+                        </select>
                     </div>
                 </div>
                 <div>
@@ -53,7 +57,6 @@
             <div id="hasilTBJ" class="mt-6 hidden p-6 bg-red-100 border-l-4 border-red-600 rounded-lg shadow-lg">
                 <h3 class="text-lg font-semibold text-red-600">Hasil Perhitungan</h3>
                 <p id="tbjValue" class="mt-2 text-xl font-semibold text-gray-800"></p>
-                <p id="tbjKategori" class="mt-2 text-lg font-medium text-gray-700"></p>
             </div>
         </div>
     </main>
@@ -61,32 +64,25 @@
     <!-- JavaScript -->
     <script>
         function hitungTBJ() {
-            const denyut = parseFloat(document.getElementById("denyut").value);
-            const usia = parseInt(document.getElementById("usia").value);
+            const tfu = parseFloat(document.getElementById("tfu").value);
+            const kepala = document.getElementById("kepala").value;
 
-            if (!denyut || !usia || denyut <= 0 || usia <= 0) {
-                alert("Masukkan nilai denyut jantung dan usia yang valid.");
+            if (!tfu || !kepala) {
+                alert("Masukkan nilai TFU dan pilih kondisi kepala masuk PAP.");
                 return;
             }
 
-            const tbjMaksimal = 220 - usia; // Rumus denyut jantung maksimal
-            const tbj = (denyut / tbjMaksimal) * 100; // Rumus TBJ (%)
-            let kategori = "";
-
-            if (tbj < 50) {
-                kategori = "Sangat Rendah (Tidak Optimal)";
-            } else if (tbj >= 50 && tbj <= 70) {
-                kategori = "Zona Kebugaran (Optimal)";
-            } else if (tbj > 70 && tbj <= 85) {
-                kategori = "Zona Aerobik (Sangat Baik)";
+            // Rumus perhitungan TBJ
+            let tbj;
+            if (kepala === "masuk") {
+                tbj = (tfu - 11) * 155;
             } else {
-                kategori = "Zona Berbahaya (Terlalu Tinggi)";
+                tbj = (tfu - 12) * 155;
             }
 
             // Tampilkan hasil
             document.getElementById("hasilTBJ").classList.remove("hidden");
-            document.getElementById("tbjValue").textContent = `Tingkat Bantuan Jantung Anda: ${tbj.toFixed(2)}% dari denyut jantung maksimal.`;
-            document.getElementById("tbjKategori").textContent = `Kategori: ${kategori}`;
+            document.getElementById("tbjValue").textContent = `Taksiran Berat Janin: ${tbj.toFixed(2)} gram.`;
         }
     </script>
 

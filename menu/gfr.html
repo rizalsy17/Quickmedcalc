@@ -12,7 +12,7 @@
     <!-- Header -->
     <header class="bg-blue-600 text-white p-4">
         <div class="flex items-center justify-between">
-            <h1 class="text-xl font-bold">
+            <h1 class="text-l font-bold">
                 <i class="fas fa-cogs mr-2"></i>
                 Kalkulator GFR (Glomerular Filtration Rate)
             </h1>
@@ -81,26 +81,22 @@
             const beratBadan = parseFloat(document.getElementById("beratBadan").value);
             const jenisKelamin = document.getElementById("jenisKelamin").value;
             const kreatinin = parseFloat(document.getElementById("kreatinin").value);
-
+    
             if (isNaN(umur) || isNaN(beratBadan) || isNaN(kreatinin)) {
                 alert("Masukkan semua data yang diperlukan.");
                 return;
             }
-
-            // Rumus GFR berdasarkan formula Cockcroft-Gault
-            let gfr;
-
-            if (jenisKelamin === 'pria') {
-                gfr = ((140 - umur) * beratBadan) / (72 * kreatinin);
-            } else {
-                gfr = ((140 - umur) * beratBadan) / (72 * kreatinin) * 0.85;
-            }
-
-            // Tampilkan hasil
+    
+            // Rumus GFR berdasarkan formula baru
+            const faktorKelamin = jenisKelamin === 'wanita' ? 0.85 : 1;
+            const gfr = ((140 - umur) * beratBadan * faktorKelamin) / (72 * kreatinin);
+    
+            // Tampilkan hasil dengan satuan cc
             document.getElementById("hasilGFR").classList.remove("hidden");
-            document.getElementById("gfrResult").textContent = `GFR Anda adalah: ${gfr.toFixed(2)} mL/menit/1.73m²`;
+            document.getElementById("gfrResult").textContent = `GFR Anda adalah: ${gfr.toFixed(2)} cc/menit/1.73m²`;
         }
     </script>
+    
 
 </body>
 </html>

@@ -12,9 +12,9 @@
     <!-- Header -->
     <header class="bg-red-600 text-white p-4">
         <div class="flex items-center justify-between">
-            <h1 class="text-xl font-bold">
+            <h1 class="text-l font-bold">
                 <i class="fas fa-tint mr-2"></i>
-                Kalkulator Kebutuhan Transfusi Darah
+                Kebutuhan Transfusi Darah
             </h1>
             <a href="../index.html" class="text-white">
                 <i class="fas fa-home text-2xl text-yellow-400"></i>
@@ -38,8 +38,15 @@
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-heartbeat text-yellow-500"></i>
                     <div class="flex-grow">
-                        <label for="kehilangan" class="block text-sm font-medium">Persentase Kehilangan Darah (%):</label>
-                        <input type="number" id="kehilangan" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                        <label for="hbSaatIni" class="block text-sm font-medium">Hb Saat Ini (g/dL):</label>
+                        <input type="number" id="hbSaatIni" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-level-up-alt text-blue-500"></i>
+                    <div class="flex-grow">
+                        <label for="hbTarget" class="block text-sm font-medium">Hb yang Ingin Dicapai (g/dL):</label>
+                        <input type="number" id="hbTarget" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
                     </div>
                 </div>
                 <div>
@@ -52,7 +59,8 @@
 
             <div id="hasilTransfusi" class="mt-6 hidden p-6 bg-red-100 border-l-4 border-red-600 rounded-lg shadow-lg">
                 <h3 class="text-lg font-semibold text-red-600">Hasil Perhitungan</h3>
-                <p id="kebutuhanTransfusi" class="mt-2 text-xl font-semibold text-gray-800"></p>
+                <p id="kebutuhanPRC" class="mt-2 text-gray-800"></p>
+                <p id="kebutuhanWB" class="mt-2 text-gray-800"></p>
             </div>
         </div>
     </main>
@@ -61,22 +69,24 @@
     <script>
         function hitungKebutuhanTransfusi() {
             const beratBadan = parseFloat(document.getElementById("beratBadan").value);
-            const kehilangan = parseFloat(document.getElementById("kehilangan").value);
-
-            if (!beratBadan || !kehilangan) {
-                alert("Masukkan semua data yang diperlukan.");
+            const hbSaatIni = parseFloat(document.getElementById("hbSaatIni").value);
+            const hbTarget = parseFloat(document.getElementById("hbTarget").value);
+    
+            if (!beratBadan || !hbSaatIni || !hbTarget || hbSaatIni >= hbTarget) {
+                alert("Masukkan data yang valid. Pastikan Hb yang ingin dicapai lebih tinggi dari Hb saat ini.");
                 return;
             }
-
-            // Menghitung kebutuhan transfusi darah
-            const darahHilang = beratBadan * (kehilangan / 100);
-            const kebutuhanTransfusi = darahHilang * 0.1; // 1 unit darah setara dengan 10% kehilangan darah
-
+    
+            // Rumus untuk PRC dan WB
+            const kebutuhanPRC = (hbTarget - hbSaatIni) * beratBadan * 3;
+            const kebutuhanWB = (hbTarget - hbSaatIni) * beratBadan * 6;
+    
             // Tampilkan hasil
             document.getElementById("hasilTransfusi").classList.remove("hidden");
-            document.getElementById("kebutuhanTransfusi").textContent = `Kebutuhan transfusi darah: ${kebutuhanTransfusi.toFixed(2)} unit.`;
+            document.getElementById("kebutuhanPRC").textContent = `Kebutuhan Packed Red Cell (PRC): ${kebutuhanPRC.toFixed(2)} cc.`;
+            document.getElementById("kebutuhanWB").textContent = `Kebutuhan Whole Blood (WB): ${kebutuhanWB.toFixed(2)} cc.`;
         }
     </script>
-
+    
 </body>
 </html>

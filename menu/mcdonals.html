@@ -12,7 +12,7 @@
     <!-- Header -->
     <header class="bg-green-600 text-white p-4">
         <div class="flex items-center justify-between">
-            <h1 class="text-xl font-bold">
+            <h1 class="text-l font-bold">
                 <i class="fas fa-baby mr-2"></i>
                 Kalkulator Rumus McDonald’s
             </h1>
@@ -25,27 +25,28 @@
     <!-- Main Content -->
     <main class="flex-grow p-4 overflow-y-auto">
         <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold mb-4 text-center text-green-600">Hitung Usia Kehamilan Berdasarkan Rumus McDonald's</h2>
+            <h2 class="text-xl font-semibold mb-4 text-center text-green-600">Hitung Usia Gestasi Berdasarkan Rumus McDonald's</h2>
 
             <form id="mcdonaldForm" class="space-y-4">
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-ruler-combined text-blue-500"></i>
                     <div class="flex-grow">
-                        <label for="tinggiFundus" class="block text-sm font-medium">Tinggi Fundus (cm):</label>
+                        <label for="tinggiFundus" class="block text-sm font-medium">Tinggi Fundus Uteri (TFU) dalam cm:</label>
                         <input type="number" id="tinggiFundus" class="mt-1 p-2 border border-gray-300 rounded w-full" required>
                     </div>
                 </div>
                 <div>
                     <button type="button" onclick="hitungMcDonalds()" 
                             class="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition duration-200">
-                        <i class="fas fa-calculator mr-2"></i> Hitung Usia Kehamilan
+                        <i class="fas fa-calculator mr-2"></i> Hitung Usia Gestasi
                     </button>
                 </div>
             </form>
 
             <div id="hasilMcDonalds" class="mt-6 hidden p-6 bg-green-100 border-l-4 border-green-600 rounded-lg shadow-lg">
                 <h3 class="text-lg font-semibold text-green-600">Hasil Rumus McDonald's</h3>
-                <p id="mcdonaldResult" class="mt-2 text-xl font-semibold text-gray-800"></p>
+                <p id="mcdonaldResultBulan" class="mt-2 text-lg font-semibold text-gray-800"></p>
+                <p id="mcdonaldResultMinggu" class="mt-2 text-lg font-semibold text-gray-800"></p>
             </div>
         </div>
     </main>
@@ -60,12 +61,14 @@
                 return;
             }
 
-            // Rumus McDonald’s: Usia Kehamilan (minggu) = tinggi fundus (cm) / 4
-            const usiaKehamilan = tinggiFundus / 4;
+            // Rumus McDonald's:
+            const usiaGestasiBulan = (2 / 7) * tinggiFundus; // Dalam bulan
+            const usiaGestasiMinggu = (8 / 7) * tinggiFundus; // Dalam minggu
 
             // Tampilkan hasil
             document.getElementById("hasilMcDonalds").classList.remove("hidden");
-            document.getElementById("mcdonaldResult").textContent = `Usia Kehamilan Berdasarkan Rumus McDonald's adalah: ${usiaKehamilan.toFixed(1)} minggu.`;
+            document.getElementById("mcdonaldResultBulan").textContent = `Usia Gestasi Berdasarkan Rumus McDonald's adalah: ${usiaGestasiBulan.toFixed(1)} bulan.`;
+            document.getElementById("mcdonaldResultMinggu").textContent = `Usia Gestasi Berdasarkan Rumus McDonald's adalah: ${usiaGestasiMinggu.toFixed(1)} minggu.`;
         }
     </script>
 
